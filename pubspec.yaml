@@ -1,0 +1,61 @@
+name: socialmediaapp
+description: "This is a social media app that allows users to post moments of thier life and share it with others. Users can like the posts and follow other users. We inspired by Pinterest, Instagram and Spotify."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+  flutter: '>=3.13.0'
+
+dependencies:
+  device_preview: ^1.1.0
+  firebase_core: ^2.24.2
+  firebase_storage: ^11.5.6
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_dotenv: ^5.1.0
+  flutter_redux: ^0.10.0
+  flutter_secure_storage: ^9.0.0
+  flutter_svg: ^2.0.9
+  google_fonts: ^6.1.0
+  http: ^1.1.2
+  image_picker: ^1.0.5
+  logger: ^2.0.2+1
+  redux: ^5.0.0
+  redux_epics: ^0.15.1
+  rxdart: ^0.27.7
+  url_launcher: ^6.2.2
+  path_provider: ^2.0.15
+  image_picker_for_web: ^3.0.1
+  cached_network_image: ^3.3.0
+  change_app_package_name: ^1.1.0
+  wechat_assets_picker:
+  wechat_camera_picker: ^4.0.0
+  extended_image: ^8.1.0
+  package_info_plus: ^4.0.0
+  path: ^1.8.0
+  provider: ^6.0.2
+  pdf: ^3.10.7
+  intl: ^0.18.1
+  fluttertoast: ^8.2.4
+  firebase_auth: ^4.15.3
+  google_sign_in: ^6.2.1
+  flutter_stripe: ^10.0.0
+  webview_flutter: ^4.4.2
+  flutter_stripe_web: ^5.0.0
+  get: ^4.6.6
+  connectivity_plus: ^5.0.2
+  pull_to_refresh_flutter3: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: any
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
