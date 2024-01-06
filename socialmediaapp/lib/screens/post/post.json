@@ -1,0 +1,24 @@
+{
+    "activityLevel": 2.1,
+    "categories": [
+        {
+            "createdAt": "2023-12-06 00:52:45.040278",
+            "id": 1,
+            "isDeleted": 0,
+            "name": "trade"
+        },
+        {
+            "createdAt": "2023-12-06 00:52:45.062000",
+            "id": 2,
+            "isDeleted": 0,
+            "name": "study"
+        }
+    ],
+    "createdAt": "2023-12-06 01:14:01.207400",
+    "description": "Family why deal too involve position family. Economic interesting listen example analysis health response method.\nProbably office a argue any group half road.",
+    "id": 3,
+    "image": "http://Example.com/image_updated_11112121.jpg",
+    "isDeleted": 0,
+    "title": "Go view final follow economic.",
+    "updatedAt": "2023-12-06 01:16:36.859430"
+}

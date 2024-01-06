@@ -1,0 +1,98 @@
+{
+    "activityLevel": 48.1,
+    "createdAt": "2023-12-06 00:38:30.192154",
+    "email": "ibrohim@gmail.com",
+    "firstName": "Ibrohim",
+    "id": 11,
+    "interests": [
+        {
+            "createdAt": "2023-12-06 00:52:45.040278",
+            "id": 1,
+            "isDeleted": 0,
+            "name": "trade"
+        },
+        {
+            "createdAt": "2023-12-06 00:52:45.062000",
+            "id": 2,
+            "isDeleted": 0,
+            "name": "study"
+        }
+    ],
+    "isDeleted": 0,
+    "isEmailValidated": 0,
+    "lastName": "Ibrohim",
+    "password": "$2b$12$TMV8l6YmAsa3a61lrp399.CzqTYKT6EBpZnpIG6Oimkn8Sni2QsBi",
+    "posts": [
+        {
+            "activityLevel": 3.1,
+            "categories": [
+                {
+                    "createdAt": "2023-12-06 00:52:45.040278",
+                    "id": 1,
+                    "isDeleted": 0,
+                    "name": "trade"
+                },
+                {
+                    "createdAt": "2023-12-06 00:52:45.062000",
+                    "id": 2,
+                    "isDeleted": 0,
+                    "name": "study"
+                }
+            ],
+            "createdAt": "2023-12-06 01:14:01.207400",
+            "description": "Family why deal too involve position family. Economic interesting listen example analysis health response method.\nProbably office a argue any group half road.",
+            "id": 3,
+            "image": "http://Example.com/image_updated_11112121.jpg",
+            "isDeleted": 0,
+            "title": "Go view final follow economic.",
+            "updatedAt": "2023-12-06 01:16:36.859430"
+        },
+        {
+            "activityLevel": 1.0,
+            "categories": [
+                {
+                    "createdAt": "2023-12-06 00:52:45.040278",
+                    "id": 1,
+                    "isDeleted": 0,
+                    "name": "trade"
+                },
+                {
+                    "createdAt": "2023-12-06 00:52:45.062000",
+                    "id": 2,
+                    "isDeleted": 0,
+                    "name": "study"
+                }
+            ],
+            "createdAt": "2023-12-06 01:14:01.233106",
+            "description": "Three moment few. Kind public different fine chance.\nReduce against against cost worry sister per. Develop hear camera explain less style. Whose offer mouth next.",
+            "id": 4,
+            "image": "https://picsum.photos/1016/759",
+            "isDeleted": 0,
+            "title": "Itself hair property state reveal lay.",
+            "updatedAt": null
+        }
+    ],
+    "profileImage": "Ibrohim",
+    "socialMediaLinks": [
+        {
+            "icon": "path to icon",
+            "id": 1,
+            "name": "twitter",
+            "url": "path to twitter profile"
+        },
+        {
+            "icon": "path to icon",
+            "id": 2,
+            "name": "linkedin",
+            "url": "path to x profile"
+        }
+    ],
+    "updatedAt": "2023-12-08 15:56:28.322914",
+    "userMetaInfo": {
+        "followers": 0,
+        "following": 9,
+        "id": 11,
+        "likes": 0
+    },
+    "username": "ibrohim"
+}
