@@ -76,15 +76,20 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            flex: 1,
-            child: buildCachedImagePlaceHolder(
+                        flex: 1,
+            child: 
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+              child:
+ buildCachedImagePlaceHolder(
               state.post!.image!,
               context,
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
+            ),
+Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +154,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                 ],
               ),
             ),
-          ),
+                    ],
+                  ),
+                  ),
           if (state.postOwner != null)
             if (state.postOwner!.userId == store.state.appState.userState.userId && store.state.appState.profileScreenState.showUserProfileScreen)
               IconButton(

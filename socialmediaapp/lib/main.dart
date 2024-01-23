@@ -70,7 +70,7 @@ class MainApp extends StatelessWidget {
         localizationsDelegates: const [
               RefreshLocalizations.delegate,
             ],
-        onGenerateTitle: (context) => 'Social Media App',
+        onGenerateTitle: (context) => 'WeShot',
         theme: _buildTheme(Brightness.light),
         darkTheme: _buildTheme(Brightness.dark),
         initialRoute: AppRoutes.init,

@@ -116,8 +116,6 @@ class _CreatePostDialogState extends State<CreatePostDialog>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-
     Future<void> uploadImageToFirebase() async {
     try {
       AppLog.log().i('Uploading image to firebase storage.');
@@ -151,6 +149,8 @@ class _CreatePostDialogState extends State<CreatePostDialog>
       print('Failed to upload image to firebase storage: $e');
     }
   }
+
+
 
 
   Future<void> pickImageFromGalleryWeb() async {

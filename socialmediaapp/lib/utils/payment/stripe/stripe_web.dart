@@ -14,7 +14,7 @@ class StripeInterface {
     await WebStripe.instance.initPaymentSheet(
       SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
-        merchantDisplayName: 'Social Media App',
+        merchantDisplayName: 'WeShot',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
       )

@@ -1,32 +1,32 @@
 {
-    "name": "socialmediaapp",
-    "short_name": "socialmediaapp",
+    "name": "WeShot",
+    "short_name": "WeShot",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Welcome to WeShot, the ultimate social media haven where your moments aren't just shared, they're celebrated. Inspired by the visual storytelling of Pinterest, the vibrant community of Instagram, and the personalized experience of Spotify, WeShot is where life's snapshots become part of a larger, more colorful tapestry.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
+            "src": "icons/weshot_logo _upg_192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
+            "src": "icons/weshot_logo _upg_512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-maskable-192.png",
+            "src": "icons/weshot_logo _upg_192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/Icon-maskable-512.png",
+            "src": "icons/weshot_logo _upg_512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"

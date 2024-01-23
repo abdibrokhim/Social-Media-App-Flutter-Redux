@@ -1,5 +1,5 @@
 name: socialmediaapp
-description: "This is a social media app that allows users to post moments of thier life and share it with others. Users can like the posts and follow other users. We inspired by Pinterest, Instagram and Spotify."
+description: "Welcome to WeShot, the ultimate social media haven where your moments aren't just shared, they're celebrated. Inspired by the visual storytelling of Pinterest, the vibrant community of Instagram, and the personalized experience of Spotify, WeShot is where life's snapshots become part of a larger, more colorful tapestry."
 publish_to: 'none'
 version: 0.1.0
 
@@ -48,11 +48,14 @@ dependencies:
   get: ^4.6.6
   connectivity_plus: ^5.0.2
   pull_to_refresh_flutter3: ^2.0.2
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: any
+  integration_test:
+    sdk: flutter
 
 
 flutter:
