@@ -2,6 +2,7 @@ import "dart:async";
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:socialmediaapp/components/shared/error/custom_error_dialog.dart';
+import 'package:socialmediaapp/screens/settings/settings_screen.dart';
 import 'package:socialmediaapp/store/app/app_store.dart';
 import 'package:socialmediaapp/utils/env.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -66,13 +67,20 @@ class MainApp extends StatelessWidget {
       store: store,
       child:  RefreshConfiguration(
         child:
+        StoreConnector<GlobalState, ThemeMode?>(
+              onInit: (store) {
+              },
+              converter: (store) => store.state.appState.settingsState.theme!,
+              builder: (context, profileScreenState) {
+                return
       MaterialApp(
         localizationsDelegates: const [
               RefreshLocalizations.delegate,
             ],
         onGenerateTitle: (context) => 'WeShot',
-        theme: _buildTheme(Brightness.light),
+        theme: ThemeData(),
         darkTheme: _buildTheme(Brightness.dark),
+        themeMode: store.state.appState.settingsState.theme,
         initialRoute: AppRoutes.init,
         routes: AppRoutes.getRoutes(),
         title: Environments.appName,
@@ -84,7 +92,10 @@ class MainApp extends StatelessWidget {
             child: w!,
           );
         },
-      ),
+      );
+              },
+              onDispose: (store) {},
+        )
       ),
     );
   }

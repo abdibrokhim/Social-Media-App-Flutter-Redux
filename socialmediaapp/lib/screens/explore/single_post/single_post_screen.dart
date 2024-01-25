@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:socialmediaapp/components/shared/build_cached_image.dart';
+import 'package:socialmediaapp/components/shared/refreshable.dart';
 import 'package:socialmediaapp/screens/explore/single_post/components/datetime_helper.dart';
 import 'package:socialmediaapp/screens/explore/single_post/components/like_widget.dart';
 import 'package:socialmediaapp/screens/explore/single_post/components/more_options_dialog.dart';
@@ -37,6 +39,29 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
     AppLog.log().i('single post screen, post id: $postId');
   }
 
+    void reFetchData()  {
+        AppLog.log().i('refetch single post screen');
+        store.dispatch(GetSinglePostRequestAction(postId));
+  }
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async{
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    reFetchData();
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async{
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    _refreshController.loadComplete();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +89,12 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
         ),
         title: const Text('Post'),
       ),
-      body: state.post == null || state.isLoading
+      body:  Refreshable(
+            refreshController: _refreshController,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            child: 
+      state.post == null || state.isLoading
       ? const CircularProgressIndicator()
       :
       SingleChildScrollView(
@@ -167,6 +197,7 @@ Padding(
       ),
                     ],
                   )
+      )
       )
     );
   }

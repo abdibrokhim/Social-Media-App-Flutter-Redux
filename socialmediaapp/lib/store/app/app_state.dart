@@ -26,6 +26,7 @@ class AppState {
   final AwesomeNotificationState awesomeNotificationState;
   final CategoryState categoryState;
   final SettingsState settingsState;
+  
 
   AppState({
     required this.userState,

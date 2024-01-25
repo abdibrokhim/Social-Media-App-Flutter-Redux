@@ -5,14 +5,17 @@ import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:socialmediaapp/components/shared/build_cached_image.dart';
 import 'package:socialmediaapp/components/shared/error/cuctom_error_widget.dart';
 import 'package:socialmediaapp/components/shared/icon_button.dart';
 import 'package:socialmediaapp/components/shared/toast.dart';
 import 'package:socialmediaapp/components/widgets/selected_assets_list_view.dart';
 import 'package:socialmediaapp/screens/category/category_reducer.dart';
+import 'package:socialmediaapp/screens/explore/single_post/single_post_reducer.dart';
 import 'package:socialmediaapp/screens/mainlayout/components/notification_reducer.dart';
 import 'package:socialmediaapp/screens/post/create_post_reducer.dart';
 import 'package:socialmediaapp/screens/post/post_model.dart';
+import 'package:socialmediaapp/screens/post/update_post_reducer.dart';
 import 'package:socialmediaapp/screens/profile/components/renew_subscription_dialog.dart';
 import 'package:socialmediaapp/screens/profile/components/subscription_dialog.dart';
 import 'package:socialmediaapp/screens/profile/profile_screen_reducer.dart';
@@ -32,37 +35,23 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart'
 
 
 
-class CreatePostDialog extends StatefulWidget {
+class EditPostDialog extends StatefulWidget {
 
-  const CreatePostDialog({
+  const EditPostDialog({
     Key? key,
   }) : super(key: key);
 
   @override
-  _CreatePostDialogState createState() => _CreatePostDialogState();
+  _EditPostDialogState createState() => _EditPostDialogState();
 }
 
-class _CreatePostDialogState extends State<CreatePostDialog>
+class _EditPostDialogState extends State<EditPostDialog>
       with AutomaticKeepAliveClientMixin {
   final ValueNotifier<bool> isDisplayingDetail = ValueNotifier<bool>(true);
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<int> selectedCategoryIds = [];
-  int? currentSelectedCategoryId;
   bool isUploadingImage = false;
-
-
-  void _addCategoryToList(int categoryId) {
-    if (!selectedCategoryIds.contains(categoryId)) {
-      setState(() {
-        selectedCategoryIds.add(categoryId);
-        currentSelectedCategoryId = null; // Reset dropdown after selection
-        removeError(error: 'Please select at least one category.');
-      });
-    }
-  }
-
 
   Uint8List? _imageData;
   XFile? _imageFile;
@@ -190,8 +179,6 @@ class _CreatePostDialogState extends State<CreatePostDialog>
 
   Future<void> selectAssets(PickMethod model) async {
     try {
-      
-
     final List<AssetEntity>? result = await model.method(context, assets);
     if (result != null) {
       File? myFile = await result.first.file;
@@ -202,6 +189,7 @@ class _CreatePostDialogState extends State<CreatePostDialog>
             assets = List<AssetEntity>.from(result);
             _imageData = data;
             isUploadingImage = true;
+            imageUrl == '';
             print('creating post with assets: $assets');
           });
           await uploadImageToFirebase();
@@ -214,6 +202,7 @@ class _CreatePostDialogState extends State<CreatePostDialog>
   }
 
   Widget buildImageField(BuildContext context) {
+    print('current image: ${store.state.appState.singlePostScreenState.post!.image!}');
     return Column(
       children: [
         if (_imageFile != null)
@@ -267,6 +256,7 @@ class _CreatePostDialogState extends State<CreatePostDialog>
   void removeAsset(int index, String imageKey) {
     setState(() {
       assets.removeAt(index);
+      imageUrl = store.state.appState.singlePostScreenState.post!.image!;
     });
     if (assets.isEmpty) {
       isDisplayingDetail.value = false;
@@ -293,12 +283,9 @@ class _CreatePostDialogState extends State<CreatePostDialog>
             padding: const EdgeInsets.all(20.0),
             child: StoreConnector<GlobalState, CreatePostState>(
               onInit: (store) {
-                _titleController.text = "";
-                _descriptionController.text = "";
-                selectedCategoryIds = [];
-                AppLog.log().i('Getting category list.');
-                store.dispatch(GetCategoryListAction());
-                // store.dispatch(CreatePostState.initial());
+                _titleController.text = store.state.appState.singlePostScreenState.post!.title;
+                _descriptionController.text = store.state.appState.singlePostScreenState.post!.description!;
+                imageUrl = store.state.appState.singlePostScreenState.post!.image!;
               },
               converter: (store) => store.state.appState.createPostState,
               builder: (context, createPostState) {
@@ -343,7 +330,13 @@ class _CreatePostDialogState extends State<CreatePostDialog>
                           onRemoveAsset: removeAsset,
                           imageKey: 'create_post',
                         ),
-                      imageUrl != null
+                      if (assets.isEmpty)
+                        if (store.state.appState.singlePostScreenState.post!.image!.isNotEmpty)
+                          buildCachedImagePlaceHolder(
+                              store.state.appState.singlePostScreenState.post!.image!,
+                              context,
+                            ),
+                      imageUrl != null && imageUrl!.isNotEmpty
                       ?
                       Column(
                         children: [
@@ -369,8 +362,8 @@ class _CreatePostDialogState extends State<CreatePostDialog>
                                   AppLog.log().i('Using AI to generate post title and description.');
                                   if (imageUrl != null) {
                                     AppLog.log().i('Simulation started.');
-                                    // TODO: Need to fix this
                                     store.dispatch(GeminiAutocompleteRequestAction(imageUrl!));
+                                    // Use simulation if AI is not working
                                     // store.dispatch(AIAutocompleteSimulateRequestAction());
                                   } else {
                                     showToast(message: "Could not recognize image.", bgColor: getNotificationColor(NotificationColor.red), webBgColor: "red");
@@ -407,42 +400,6 @@ class _CreatePostDialogState extends State<CreatePostDialog>
                           }
                         },
                       ),
-                      if (selectedCategoryIds.isNotEmpty)
-                        const Text('Selected Categories',),
-                        const SizedBox(height: 4,),
-                      Wrap(
-                        spacing: 8.0, // gap between adjacent chips
-                        runSpacing: 4.0, // gap between lines
-                        children: selectedCategoryIds.map((id) {
-                          final category = categoryState.categories!.firstWhere((cat) => cat.id == id);
-                          return Chip(
-                            label: Text(category.name),
-                            onDeleted: () {
-                              setState(() {
-                                selectedCategoryIds.remove(id);
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 16,),
-                      if (categoryState.categories != null)
-                        DropdownButton<int>(
-                          hint: const Text("Select Category"),
-                          value: currentSelectedCategoryId,
-                          onChanged: (int? newValue) {
-                            if (newValue != null) {
-                              _addCategoryToList(newValue);
-
-                            }
-                          },
-                          items: categoryState.categories!.map((category) {
-                            return DropdownMenuItem<int>(
-                              value: category.id,
-                              child: Text(category.name),
-                            );
-                          }).toList(),
-                        ),
                       const SizedBox(height: 40,),
                       Row(
                         children: [
@@ -456,7 +413,7 @@ class _CreatePostDialogState extends State<CreatePostDialog>
                           ),
                           buildIconButton(
                             icon: Icons.post_add_rounded,
-                            text: 'Create',
+                            text: 'Update',
                             onPressed: () {
                               if (_imageData == null) {
                                 addError(error: 'Please select an image.');
@@ -482,36 +439,36 @@ class _CreatePostDialogState extends State<CreatePostDialog>
                                 return;
                               }
 
-                              if (selectedCategoryIds.isEmpty) {
-                                addError(error: 'Please select at least one category.');
-                                return;
-                              }
-
-                              CreatePost newPost = CreatePost(
+                              UpdatePost updatedPost = UpdatePost(
                                 title: _titleController.text,
                                 description: _descriptionController.text,
                                 image: imageUrl,
-                                categories: List<PostCategory>.from(selectedCategoryIds.map((id) => PostCategory(categoryId: id))),
                               );
                               
                               AppLog.log().i('Creating new post.');
-                              store.dispatch(CreatePostRequestAction(newPost));
-                              
-                              if (createPostState.createdPostId != null) {
-                                AppLog.log().i('sending single post request');
-                                AppLog.log().i('displaying post id: ${createPostState.createdPostId}');
-                                store.dispatch(SinglePostRequestAction(createPostState.createdPostId!));
-                              } else {
-                                showToast(message: "Could not load created post. Please try to refresh window.", bgColor: getNotificationColor(NotificationColor.blue), webBgColor: "blue");
-                              }
-                              
-                              AppLog.log().i('fetching user posts');
-                              store.dispatch(GetUserPostsAction(store.state.appState.profileScreenState.selectedUserId!));
 
-                              if (createPostState.errors.isNotEmpty) {
-                                showToast(message: createPostState.errors.first, bgColor: getNotificationColor(NotificationColor.red), webBgColor: "red");
+                              if (store.state.appState.userState.selectedPostId != null) {
+
+                                store.dispatch(UpdatePostAction(store.state.appState.userState.selectedPostId!, updatedPost));
+                                
+                                if (createPostState.createdPostId != null) {
+                                  AppLog.log().i('sending single post request');
+                                  AppLog.log().i('displaying post id: ${createPostState.createdPostId}');
+                                  store.dispatch(SinglePostRequestAction(createPostState.createdPostId!));
+                                } else {
+                                  showToast(message: "Could not load upodated post. Please try to refresh window.", bgColor: getNotificationColor(NotificationColor.blue), webBgColor: "blue");
+                                }
+                                
+                                AppLog.log().i('fetching user posts');
+                                store.dispatch(GetUserPostsAction(store.state.appState.profileScreenState.selectedUserId!));
+
+                                if (createPostState.errors.isNotEmpty) {
+                                  showToast(message: createPostState.errors.first, bgColor: getNotificationColor(NotificationColor.red), webBgColor: "red");
+                                } else {
+                                  showToast(message: "Post was upodated successfully.", bgColor: getNotificationColor(NotificationColor.green), webBgColor: "green");
+                                }
                               } else {
-                                showToast(message: "Post was created successfully.", bgColor: getNotificationColor(NotificationColor.green), webBgColor: "green");
+                                showToast(message: "Could not load upodated post. Please try to refresh window.", bgColor: getNotificationColor(NotificationColor.blue), webBgColor: "blue");
                               }
 
                               initErrors();
@@ -554,14 +511,14 @@ class _CreatePostDialogState extends State<CreatePostDialog>
 }
 
 
-void showCreatePostDialog(BuildContext context) {
+void showEditPostDialog(BuildContext context) {
 
-  AppLog.log().i('Showing user create post dialog.');
+  AppLog.log().i('Showing user edit post dialog.');
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return const CreatePostDialog();
+      return const EditPostDialog();
     }
   );
 }

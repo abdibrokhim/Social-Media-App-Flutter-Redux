@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:socialmediaapp/components/shared/confirmation_dialog.dart';
 import 'package:socialmediaapp/components/shared/icon_button.dart';
+import 'package:socialmediaapp/screens/explore/single_post/components/edit_post_dialog.dart';
 import 'package:socialmediaapp/screens/post/post_reducer.dart';
 import 'package:socialmediaapp/screens/user/user_reducer.dart';
 import 'package:socialmediaapp/store/app/app_store.dart';
@@ -32,7 +33,7 @@ void showSinglePostMoreOptionsDialog(BuildContext context) {
                   text: 'Edit post',
                   onPressed: () {
                     AppLog.log().i('Tapped on edit post.');
-                    Navigator.of(context).pop();
+                    showEditPostDialog(context);
                   },
                 ),
                 buildIconButton(
