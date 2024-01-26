@@ -4,11 +4,11 @@ import 'package:redux/redux.dart';
 
 class SettingsState {
   final bool isLoading;
-  final ThemeMode? theme;
+  ThemeMode? theme = ThemeMode.system;
 
   SettingsState({
     this.isLoading = false,
-    this.theme,
+    this.theme
   });
 
   SettingsState copyWith({

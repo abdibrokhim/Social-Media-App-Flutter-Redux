@@ -144,8 +144,8 @@ class AppPromoWidget extends StatelessWidget {
                               print('tapped on download app form play store');
                             },
                             child:
-                          Image.network(
-                            'https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png',
+                          Image.asset(
+                            '/en_badge_web_generic.png',
                             height: 50,
                             semanticLabel: 'Play Store Logo',
                           ),
