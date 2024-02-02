@@ -67,10 +67,10 @@ class MainApp extends StatelessWidget {
       store: store,
       child:  RefreshConfiguration(
         child:
-        StoreConnector<GlobalState, ThemeMode?>(
+        StoreConnector<GlobalState, ThemeMode>(
               onInit: (store) {
               },
-              converter: (store) => store.state.appState.settingsState.theme!,
+              converter: (store) => store.state.appState.settingsState.theme,
               builder: (context, profileScreenState) {
                 return
       MaterialApp(
