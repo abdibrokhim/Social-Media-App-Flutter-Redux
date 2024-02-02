@@ -16,6 +16,10 @@ Personalized For You: Like Spotify's playlists tailored to your musical taste, W
 
 Powered by GPT4Vision: WeShot harnesses the cutting-edge capabilities of GPT4 Vision to elevate your storytelling. 
 
+## Preview Demo
+
+![WeShot 1.0](https://vimeo.com/909013220?share=copy)
+
 ## Getting Started
 
 ### Dependencies
