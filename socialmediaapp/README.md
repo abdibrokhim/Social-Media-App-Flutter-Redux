@@ -18,7 +18,7 @@ Powered by GPT4Vision: WeShot harnesses the cutting-edge capabilities of GPT4 Vi
 
 ## Preview Demo
 
-![WeShot 1.0](https://vimeo.com/909013220?share=copy)
+WeShot 1.0: https://vimeo.com/909013220?share=copy
 
 ## Getting Started
 
